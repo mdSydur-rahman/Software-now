@@ -1,0 +1,31 @@
+import pandas as pd
+
+# Define the paths to your CSV files and the names of the large text columns
+csv_files = {
+    '/content/drive/My Drive/Sydhur/CSV1.csv': 'SHORT-TEXT',
+    '/content/drive/My Drive/Sydhur/CSV2.csv': 'entites',
+    '/content/drive/My Drive/Sydhur/CSV3.csv': 'TEXT',
+    '/content/drive/My Drive/Sydhur/CSV4.csv': 'TEXT'
+}
+
+# Path to the output .txt file
+output_txt_path = '/content/drive/My Drive/Sydhur/combined_text.txt'
+
+# Initialize an empty list to collect text
+all_texts = []
+
+# Process each CSV file
+for csv_path, text_column in csv_files.items():
+    df = pd.read_csv(csv_path)
+    # Extract text from the specified column
+    texts = df[text_column].astype(str).tolist()
+    all_texts.extend(texts)
+
+# Combine all text into a single string with newlines
+combined_text = "\n".join(all_texts)
+
+# Write the combined text to a .txt file
+with open(output_txt_path, 'w') as file:
+    file.write(combined_text)
+
+print(f"Text from all CSV files has been combined and saved to {output_txt_path}")
